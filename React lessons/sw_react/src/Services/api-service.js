@@ -1,5 +1,5 @@
 class ApiService {
-    _apiBase = "https://swapi.py4e.com/api"
+    _apiBase = "https://swapi.dev/api"
     async getResources(url){
         const responce = await fetch(`${this._apiBase}${url}`)
         if (!responce.ok){
@@ -21,9 +21,9 @@ class ApiService {
         const responce = await this.getResources(`/planets/`)
         return responce.results
     }
-    getPlanet(id){
-        return this.getResources(`/planets/${id}/`)
-
+    async getPlanet(id){
+        const planet = await this.getResources(`/planets/${id}/`)
+        return this._transformPlanet(planet)
     }
 
     async getAllStarships(){
@@ -34,6 +34,22 @@ class ApiService {
         return this.getResources(`/starships/${id}/`)
 
     }
+
+    _transformPlanet(planet){
+        const id = this._extractId(planet)
+        return{
+            id,
+            name: planet.name,
+            population: planet.population,
+            rotationPeriod: planet.rotation_period,
+            diameter: planet.diameter
+        }
+    }
+    _extractId(item){
+        const idRegExp =/\/([0-9]*)\/$/
+        return item.url.match(idRegExp)[1]
+    }
+
 }
 
 export default ApiService;
