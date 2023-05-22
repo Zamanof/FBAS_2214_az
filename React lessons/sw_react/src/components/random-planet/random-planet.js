@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import "./random-planet.css";
 import ApiService from "../../Services/api-service"
 import Spinner from "../spinner";
+import ErrorIndicator from "../error-indicator";
 
 const RandomPlanet = () => {
     const apiService = new ApiService()
@@ -13,30 +14,37 @@ const RandomPlanet = () => {
         diameter:null
     })
     const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(true)
+    const [error, setError] = useState(false)
 
     const onPlanetLoaded=(planet)=>{
         setPlanet(planet);
         setLoading(false)
+        setError(false)
     }
-
+    const onError = (err)=>{
+        setError(true)
+        setLoading(false)
+    }
     const updatePlanet = ()=>{
         let id = Math.floor(Math.random()*17+2)
         apiService.getPlanet(id)
             .then(onPlanetLoaded)
+            .catch(onError)
     }
     useEffect(()=>{
         updatePlanet()
         const interval = setInterval(updatePlanet, 5000)
         return ()=> clearInterval(interval)
     }, [])
+    const hasData = !(loading || error)
+    const errorMesage = error?<ErrorIndicator/>:null
     const spinner = loading ? <Spinner/>:null
-    const content = !loading ? <PlanetView planet={planet}/>:<PlanetView planet={planet}/>
+    const content = hasData ? <PlanetView planet={planet}/>:null
     return (
         <div className="random-planet bg-dark rounded">
-            {/*{spinner}*/}
+            {errorMesage}
+            {spinner}
             {content}
-
         </div>
       );}
 export default RandomPlanet;
