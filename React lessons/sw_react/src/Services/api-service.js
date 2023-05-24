@@ -1,5 +1,6 @@
 class ApiService{
-    _apiBase = 'https://swapi.dev/api';
+    _apiBase = 'https://swapi.py4e.com/api';
+    _imageBase ='https://starwars-visualguide.com/assets/img/'
     async getResource(url){
         const res = await fetch(`${this._apiBase}${url}`);
         if(!res.ok){
@@ -29,6 +30,16 @@ class ApiService{
     }
      getStarship = async(id)=>{
         return await this.getResource(`/starships/${id}/`);
+    }
+
+    getPersonImage = ({id})=>{
+        return `${this._imageBase}characters/${id}.jpg`
+    }
+    getPlanetImage = ({id})=>{
+        return `${this._imageBase}planets/${id}.jpg`
+    }
+    getStarshipImage = ({id})=>{
+        return `${this._imageBase}starships/${id}.jpg`
     }
 
     _transformPlanet = (planet) => {

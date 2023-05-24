@@ -2,6 +2,9 @@
     0% { transform: rotate(0) }
     100% { transform: rotate(360deg) }
 }
+#spinner{
+    margin: 0 auto;
+}
 .ldio-q5slf8dqkto div { box-sizing: border-box!important }
 .ldio-q5slf8dqkto > div {
     position: absolute;
@@ -79,7 +82,6 @@
     height: 101px;
     display: inline-block;
     overflow: hidden;
-    background: rgba(NaN, NaN, NaN, 0);
 }
 .ldio-q5slf8dqkto {
     width: 100%;

@@ -3,19 +3,19 @@ import React, {useState, useEffect} from "react";
 import "./item-list.css";
 import Spinner from "../spinner";
 
-const ItemList = ({onItemSelected, getData, renderItem}) => {
+const ItemList = ({onItemSelected, getData, children}) => {
     const [itemList, setItemList] = useState(null)
     useEffect(()=>{
             getData()
-            .then((peopleList)=>{
-                setItemList(peopleList)
+            .then((itemList)=>{
+                setItemList(itemList)
             })
     }, [])
 
     const renderItems = (items)=>{
         return items.map((item)=>{
             const{id} = item;
-            const label = renderItem(item)
+            const label = children(item)
             return(
                 <li className="list-group-item"
                     key={id} onClick={
