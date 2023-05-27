@@ -30,7 +30,7 @@ export default {folder_name.title()};
     """
     f1.write(jsText)
     f2 = open(f"{folder_name}.css", "w")
-    f3 = open(f"index.js", "w")
+    f3 = open(f"use-context.js", "w")
     indTxt = f"""import {folder_name.title()}  from './{folder_name}';
 
 export default {folder_name.title()};
