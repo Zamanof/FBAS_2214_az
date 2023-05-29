@@ -23,7 +23,6 @@ const ItemDetails = ({itemId, getData, getImageUrl, children}) => {
 
     useEffect(()=>{
         updateItem()
-        console.log(itemId)
     }, [itemId])
 
     const updateItem = ()=>{

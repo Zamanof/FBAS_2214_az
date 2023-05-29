@@ -28,4 +28,4 @@ const PlanetPage = () => {
     return (<Row left={itemList} right={PlanetDetails}/>)
 };
 
-export default PlanetPage;
+export default {PlanetPage};

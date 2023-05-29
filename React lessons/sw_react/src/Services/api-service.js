@@ -27,7 +27,6 @@ class ApiService{
         return this._transformPlanet(planet)
     }
      getAllStarships = async()=>{
-         console.log("starship")
         const res = await this.getResource(`/starships/`);
         return res.results.map(this._transformStarship);
     }
