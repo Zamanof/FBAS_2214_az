@@ -1,3 +1,5 @@
+import {strict} from "assert";
+
 class ApiService{
     _apiBase = 'https://swapi.py4e.com/api';
     _imageBase ='https://starwars-visualguide.com/assets/img/'
@@ -25,11 +27,13 @@ class ApiService{
         return this._transformPlanet(planet)
     }
      getAllStarships = async()=>{
+         console.log("starship")
         const res = await this.getResource(`/starships/`);
-        return res.results;
+        return res.results.map(this._transformStarship);
     }
      getStarship = async(id)=>{
-        return await this.getResource(`/starships/${id}/`);
+        const starship = await this.getResource(`/starships/${id}/`);
+        return this._transformStarship(starship)
     }
 
     getPersonImage = ({id})=>{
@@ -61,6 +65,18 @@ class ApiService{
             gender: people.gender,
             birthYear: people.birth_year,
             eyeColor: people.eye_color
+        }
+    }
+
+    _transformStarship = (starship) => {
+        const id = this._extractId(starship);
+
+        return {
+            id,
+            name: starship.name,
+            model: starship.model,
+            length: starship.length,
+            cost: starship.cost_in_credits
         }
     }
 
